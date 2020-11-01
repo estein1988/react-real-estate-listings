@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import CardsContainer from './components/CardsContainer'
+// import CardsContainer from './components/CardsContainer'
+import GoogleMap from './components/GoogleMap'
 // import FavoritesContainer from './components/FavoritesContainer'
 import './App.css';
 
@@ -47,7 +48,8 @@ class App extends Component {
       <div className="App">
         <h1>7-10 Home-Split</h1>
           {/* <FavoritesContainer allFavorites={this.state.favorites} /> */}
-          <CardsContainer clickAction={this.addToFavorites} allHomes={this.state.homes} />
+          {/* <CardsContainer clickAction={this.addToFavorites} allHomes={this.state.homes} /> */}
+          <GoogleMap />
       </div>
     )
   }

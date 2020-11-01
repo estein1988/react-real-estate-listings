@@ -18,3 +18,9 @@
   margin: 2rem;
   justify-content: center;
 }
+
+.leaflet-container { 
+  margin: 1rem; 
+  width: 97vw;
+  height: 97vh; 
+}
