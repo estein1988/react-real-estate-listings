@@ -2,23 +2,23 @@ import React, { Component } from 'react';
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 
 const mapStyles = {
-    width: '75%',
+    width: '50%',
     height: '75%'
 }
 
 export class MapContainer extends Component {
 
     state = {
-        homes: [],
+        allHomes: [],
         showingInfoWindow: false,  
-        activeMarker: {},        
-        selectedPlace: {}          
+        activeMarker: [],        
+        selectedPlace: []        
     }
 
     componentDidMount(){
         fetch('http://127.0.0.1:8000/homes/')
             .then(response => response.json())
-            .then(homeData => { this.setState( {homes: homeData} ) })
+            .then(homeData => { this.setState( {allHomes: homeData} ) })
     }
 
     onMarkerClick = (props, marker, e) =>
@@ -39,32 +39,41 @@ export class MapContainer extends Component {
 
     render() {
         return (
-            <Map
-            google={this.props.google}
-            zoom={10}
-            style={mapStyles}
-            initialCenter={
-                {
-                    lat: 39.79,
-                    lng: -104.9
+            <Map className="googleMap"
+                google={this.props.google}
+                zoom={10}
+                style={mapStyles}
+                initialCenter={
+                    {
+                        lat: 39.79,
+                        lng: -104.9
+                    }
                 }
-            }
             >
-            <Marker
-            onClick={this.onMarkerClick}
-            // name={'Kenyatta International Convention Centre'}
-            position={{
-                lat: -1.2884,
-                lng: 36.8233
-            }}
-            />
+            {this.state.allHomes.map(home => (
+                <Marker 
+                    onClick={this.onMarkerClick}
+                    street={home.street}
+                    price={home.price}
+                    position={{
+                        lat: home.lat,
+                        lng: home.logit
+                    }}
+                    icon={home.price < 600000  
+                        ? {url: `https://www.clker.com/cliparts/R/g/O/v/U/h/google-maps-marker-for-residencelamontagne-md.png`, scaledSize: new window.google.maps.Size(20, 20)}
+                        : {url: `https://www.clker.com/cliparts/W/0/g/a/W/E/map-pin-red.svg`, scaledSize: new window.google.maps.Size(35, 35)}
+                        
+                    }
+                />
+            ))}
             <InfoWindow
                 marker={this.state.activeMarker}
                 visible={this.state.showingInfoWindow}
                 onClose={this.onClose}
             >
             <div>
-                <h4>{this.state.selectedPlace.name}</h4>
+                <h2>{this.state.selectedPlace.street}</h2>
+                <h4>${this.state.selectedPlace.price}</h4>
             </div>
             </InfoWindow>
         </Map>
@@ -73,5 +82,5 @@ export class MapContainer extends Component {
 }
 
 export default GoogleApiWrapper({
-apiKey: 'AIzaSyD1hcrTaxPRCvV3C98Ei24vfyuuOc63R0c'
+    
 })(MapContainer);
