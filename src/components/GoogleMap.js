@@ -54,6 +54,9 @@ export class MapContainer extends Component {
                 <Marker 
                     onClick={this.onMarkerClick}
                     street={home.street}
+                    city={home.city}
+                    state={home.state}
+                    zip={home.zip_code}
                     price={home.price}
                     position={{
                         lat: home.lat,
@@ -72,8 +75,9 @@ export class MapContainer extends Component {
                 onClose={this.onClose}
             >
             <div>
-                <h2>{this.state.selectedPlace.street}</h2>
-                <h4>${this.state.selectedPlace.price}</h4>
+                <h3>{this.state.selectedPlace.street}</h3>
+                <h4>{this.state.selectedPlace.city}, {this.state.selectedPlace.state}, {this.state.selectedPlace.zip}</h4>
+                <p>Price: ${this.state.selectedPlace.price}</p>
             </div>
             </InfoWindow>
         </Map>
@@ -82,5 +86,5 @@ export class MapContainer extends Component {
 }
 
 export default GoogleApiWrapper({
-    
+    apiKey: 'AIzaSyAZ7VU-onD4lHSYOhP1n8-ur44DWaJEkpk'
 })(MapContainer);

@@ -38,15 +38,13 @@ class App extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(
-          {home: home.id, profile: 1}
+          {home: home.id, profile: 3}
       )
     })
       .then(response => response.json())
       .then(favorite => this.setState({favorites: [...this.state.favorites, favorite]}))
         window.location.reload(false)
   }
-
-
 
   render(){
     const useStyles = makeStyles((theme) => ({
@@ -59,20 +57,22 @@ class App extends Component {
         color: theme.palette.text.secondary,
       },
     }));
+    
     return (
       <div className="App">
-        <h1>7-10 Home-Split</h1>
         <div className={useStyles.root}>
-        <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
-          <Paper className={useStyles.paper}> <GoogleMap /> </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Paper className={useStyles.paper}>
-            <CardsContainer clickAction={this.addToFavorites} allHomes={this.state.homes} />
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6}>
+              <Paper className={useStyles.paper}> 
+                <GoogleMap /> 
+              </Paper>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Paper className={useStyles.paper}>
+              <CardsContainer clickAction={this.addToFavorites} allHomes={this.state.homes} />
           </Paper>
-        </Grid>
-        </Grid>
+          </Grid>
+          </Grid>
           {/* <FavoritesContainer allFavorites={this.state.favorites} /> */}
         </div>
       </div>
